@@ -8,16 +8,26 @@ variables = {}
 def run_line(line):
     words = line.strip().split()
 
-    # Handle variable assignment: let x be something
-    if len(words) >= 4 and words[0] == "let" and words[2] == "be":
-        name = words[1]
-        value = " ".join(words[3:])
-        if value.startswith('"') and value.endswith('"'):
-            value = value[1:-1]  # remove quotes
-        variables[name] = value
-        return
+    # Handle variable assignment: let <name> be <value>
+    if line.strip().startswith("let "):
+     # Remove the 'let ' part
+        remainder = line.strip()[4:]
 
-    # --- Handle "print" statements ---
+     # Split at the word ' be '
+        if " be " in remainder:
+            parts = remainder.split(" be ", 1)
+            name = parts[0].strip()
+            value = parts[1].strip()
+
+        # Remove quotes if needed
+            if value.startswith('"') and value.endswith('"'):
+                value = value[1:-1]
+
+            variables[name] = value
+            return
+
+
+        # --- Handle "print" statements ---
     if line.strip().startswith("print "):
         content = line.strip()[6:]  # everything after 'print '
 
@@ -30,14 +40,43 @@ def run_line(line):
         elif content in variables:
             print(variables[content])
             return
+            #Adds two variables together or numbers
+        if "+" in content:
+            parts = content.split("+")
+            left = parts[0].strip()
+            right = parts[1].strip()
+            left = "x"
+            right = "y"
+            if left in variables:
+                left_val = variables[left]
+            else:
+                left_val = left # just in case value is just a number ex: 1 and not ex: name
+            if right in variables:
+                right_val = variables[right]
+            else: right_val = right #just in case value is just a number
 
+            try:
+                result = float(left_val) + float(right_val)
+            except ValueError:
+                result = str(left_val) + str(right_val)
+            print(result)
+            return
+        
+
+        
+    
         # Otherwise, say we don't understand
         else:
             print(f"Unknown value: {content}")
             return
 
 
-    # Unknown command
+
+
+
+
+
+        # Unknown command
     print("I don’t understand that command:", line)
 
 def run_file(filename):

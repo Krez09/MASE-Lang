@@ -1,3 +1,5 @@
-let name be "Mason"
-print name
-print "67"
+let x be 5
+let y be 10
+print x + y
+
+print 5 + 5
