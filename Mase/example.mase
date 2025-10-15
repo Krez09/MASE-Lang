@@ -1,5 +1,4 @@
 let x be 5
-let y be 10
-print x + y
+let y be 6
 
-print 5 + 5
+print c + m 

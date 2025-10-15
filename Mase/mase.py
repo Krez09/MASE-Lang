@@ -40,8 +40,8 @@ def run_line(line):
         elif content in variables:
             print(variables[content])
             return
-            #Adds two variables together or numbers
-        if "+" in content:
+        #Adds two variables together or numbers
+        elif "+" in content:
             parts = content.split("+")
             left = parts[0].strip()
             right = parts[1].strip()
@@ -77,7 +77,7 @@ def run_line(line):
 
 
         # Unknown command
-    print("I don’t understand that command:", line)
+    print("I don't understand that command:", line)
 
 def run_file(filename):
     with open(filename, "r") as f:
